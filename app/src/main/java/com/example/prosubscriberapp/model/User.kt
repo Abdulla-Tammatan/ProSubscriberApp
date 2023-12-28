@@ -2,7 +2,7 @@ package com.example.prosubscriberapp.model
 
 //User Data Class
 data class User(
-    private val userID: Int,
+    private val userId: Int,
     private val deviceType: String,
     private val name: String,
     private val emailAddress: String,
@@ -12,7 +12,7 @@ data class User(
     private val gender: String,
     private val gaid: String
 ) {
-    fun getUserID(): Int = userID
+    fun getUserID(): Int = userId
     fun getDeviceType(): String = deviceType
     fun getName(): String = name
     fun getEmailAddress(): String = emailAddress

@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.prosubscriberapp"
-        minSdk = 21
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -49,6 +49,10 @@ android {
     }
 }
 
+// Define your version variables
+val exposedLibraryVersion: String by project
+val h2LibraryVersion: String by project
+
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
@@ -61,12 +65,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation ("io.ktor:ktor-server-netty:2.3.7")
     implementation ("io.ktor:ktor-serialization:2.3.7")
-    implementation ("org.jetbrains.exposed:exposed-core:0.32.1")
-    implementation ("org.jetbrains.exposed:exposed-jdbc:0.32.1")
     implementation ("mysql:mysql-connector-java:8.0.23")
-    implementation("org.jetbrains.exposed:exposed-core:0.32.1")
-    implementation("org.jetbrains.exposed:exposed-dao:0.32.1")
-    implementation("org.jetbrains.exposed:exposed-jdbc:0.32.1")
     implementation("io.ktor:ktor-jackson:1.6.5")
     implementation ("io.ktor:ktor-server-core:2.3.7")
     implementation ("io.ktor:ktor-server-netty:2.3.7")
@@ -75,7 +74,35 @@ dependencies {
     implementation ("io.ktor:ktor-server-netty:2.3.7")
     implementation ("io.ktor:ktor-locations:2.3.7")
     implementation ("io.ktor:ktor-features:2.3.7")
+    implementation("com.google.apis:google-api-services-gmail:v1-rev110-1.31.0")
+    implementation("com.google.api-client:google-api-client:1.31.0")
+    implementation("com.google.oauth-client:google-oauth-client-jetty:1.31.0")
+    implementation("com.google.apis:google-api-services-gmail:v1-rev110-1.31.0")
     implementation ("io.ktor:ktor-gson:1.7.4")
+    implementation ("javax.sql:javax.sql-api:2.0.1")
+    implementation ("org.jetbrains.exposed:exposed:0.33.2")
+    implementation ("org.jetbrains.exposed:exposed-java-time:0.36.2")
+    implementation("org.jetbrains.exposed:exposed-java-time:0.36.2")
+    implementation("com.google.firebase:proto-lite-well-known-types:18.0.0")
+    implementation ("mysql:mysql-connector-java:8.0.23")
+    implementation ("org.jetbrains.exposed:exposed-core:0.41.1")
+    implementation ("org.jetbrains.exposed:exposed-dao:0.41.1")
+    implementation ("org.jetbrains.exposed:exposed-jdbc:0.41.1")
+    implementation ("org.jetbrains.exposed:exposed:0.33.2")
+    implementation ("org.jetbrains.exposed:exposed-java-time:0.36.2")
+    implementation("org.jetbrains.exposed:exposed-java-time:0.36.2")
+    implementation ("org.jetbrains.exposed:exposed-java-time:0.36.2")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10")
+    implementation("org.jetbrains.exposed:exposed-core:0.41.1")
+    implementation("org.jetbrains.exposed:exposed-dao:0.41.1")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.41.1")
+    implementation("org.jetbrains.exposed:exposed-java-time:0.36.2")
+    implementation("org.jetbrains.exposed:exposed-core:0.41.1")
+    implementation("org.jetbrains.exposed:exposed-dao:0.41.1")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.41.1")
+    implementation("mysql:mysql-connector-java:8.0.23")
+    implementation("com.h2database:h2:2.1.214")
+    implementation("com.jakewharton.threetenabp:threetenabp:1.3.7")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

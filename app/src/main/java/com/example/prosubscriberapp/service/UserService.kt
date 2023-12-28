@@ -3,6 +3,7 @@ package com.example.prosubscriberapp.service
 import com.example.prosubscriberapp.config.Users
 import com.example.prosubscriberapp.model.User
 import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insertAndGetId
@@ -41,7 +42,7 @@ class UserService {
         val user = loginUserByEmail(email, password)
         if (user != null) {
             transaction {
-                Users.deleteWhere { Users.id eq user.getUserID() }
+                Users.deleteWhere { Users.userId eq user.getUserID() }
             }
         }
         return user
@@ -52,7 +53,7 @@ class UserService {
         validateUserInput(updatedUser)
 
         return transaction {
-            val result = Users.update({ Users.id eq updatedUser.getUserID() }) {
+            val result = Users.update({ Users.userId eq updatedUser.getUserID() }) { // Change "id" to "userId" {
                 it[email] = updatedUser.getEmailAddress()
                 it[password] = updatedUser.getPassword()
                 // Add other fields as needed
@@ -65,19 +66,17 @@ class UserService {
         validateUserDetails(user)
 
         transaction {
-            Users.update({ Users.id eq userId }) {
+            Users.update({ Users.userId eq userId }) {
                 it[Users.age] = user.getAge()
                 it[Users.name] = user.getName()
                 it[Users.location] = user.getLocation()
                 it[Users.deviceType] = user.getDeviceType()
                 it[Users.gaid] = user.getGAID()
-                // Add other user details as needed
             }
         }
     }
 
     private fun validateUserInput(user: User) {
-        // Add validation logic as needed
         if (user.getEmailAddress().isBlank() || user.getPassword().isBlank()) {
             throw IllegalArgumentException("Email and password cannot be blank.")
         }
@@ -106,13 +105,28 @@ class UserService {
             if (it < 0) {
                 throw IllegalArgumentException("Age must be a non-negative value.")
             }
-            //Add more rules as needed
+        }
+    }
+
+    // Create Gmail Account
+    fun createGmailUser(user: User) {
+        validateUserInput(user)
+
+        return transaction {
+            val userId = Users.insertAndGetId {
+                it[email] = user.getEmailAddress()
+                it[password] = user.getPassword()
+                // Add other user properties as needed
+            }.value
+
+            // Update the user with additional details
+            updateUserDetails(userId, user)
         }
     }
 
     private fun ResultRow.toUser(): User {
         return User(
-            userID = this[Users.id].value.toInt(),
+            userId = this[Users.userId],
             deviceType = this[Users.deviceType],
             emailAddress = this[Users.email],
             password = this[Users.password],
@@ -123,4 +137,10 @@ class UserService {
             gaid = this[Users.gaid]
         )
     }
+    // Check if it's a Gmail user
+    fun isGmailUser(email: String): Boolean {
+        return email.endsWith("@gmail.com")
 }
+
+}
+
